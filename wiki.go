@@ -1,8 +1,12 @@
+// +build ignore
+
 package main
 
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 type Page struct {
@@ -24,17 +28,20 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
-func main() {
-	p1 := &Page{Title: "TestPage", Body: []byte("This is a sample Page.")}
-	p1.save()
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.URL.Path[len("/view/"):]
+	p, err := loadPage(title)
 
-	p2, _ := loadPage("TestPage")
-	fmt.Println(string(p2.Body))
-
-	p3, err := loadPage("NonexistingPage")
-	if err == nil {
-		fmt.Println(p3)
+	if err != nil {
+		fmt.Fprintf(w, "<h1>Page Not Found</h1><div>Requested title: <b>%s</b></div>", title)
 	} else {
-		fmt.Println("Error! Page does not exist!")
+		fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 	}
+}
+
+func main() {
+	http.HandleFunc("/view/", viewHandler)
+
+	fmt.Println("Start webserver at *:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
