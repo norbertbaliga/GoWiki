@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -33,9 +34,11 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	p, err := loadPage(title)
 
 	if err != nil {
-		fmt.Fprintf(w, "<h1>Page Not Found</h1><div>Requested title: <b>%s</b></div>", title)
+		t, _ := template.ParseFiles("templates/error.html")
+		t.Execute(w, title)
 	} else {
-		fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+		t, _ := template.ParseFiles("templates/view.html")
+		t.Execute(w, p)
 	}
 }
 
@@ -47,12 +50,8 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 		p = &Page{Title: title}
 	}
 
-	fmt.Fprintf(w, "<h1>Editing %s</h1>"+
-		"<form action=\"/save/%s\" method=\"POST\">"+
-		"<textarea name=\"body\">%s</textarea><br>"+
-		"<input type=\"submit\" value=\"Save\">"+
-		"</form>",
-		p.Title, p.Title, p.Body)
+	t, _ := template.ParseFiles("templates/edit.html")
+	t.Execute(w, p)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request) {
