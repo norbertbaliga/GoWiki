@@ -1,2 +1,5 @@
 # Ignore all Wiki pages created
 pages/*
+
+# Ignore binary file built from the source
+wiki
