@@ -3,7 +3,7 @@ Go implementation of a simple Wiki.
 
 This code is based on one of the official Golang Tutorials here: https://golang.org/doc/articles/wiki/
 
-Running the application will launch a webserver listening on the port 8080. Visit the `http://localhost:8080/view/<page title>` in a browser or any HTTP client that will show the content of the `<page title>.txt` text file under the `/pages` folder if it already exists. In this case in addition to the content there is also an 'edit' link on the page that can be used to update the content of this file. If the title does not exist a 'Page Not Found' page will be presented with a button to create a page with the given title.
+Running the application will launch a webserver listening on the port 8080. Visit the `http://localhost:8080/view/<page title>` in a browser or any HTTP client. This will show the content of the `<page title>.txt` text file under the `/pages` folder if it already exists. In this case in addition to the content there is also an 'edit' link on the page that can be used to update the content of this file. If the title does not exist a 'Page Not Found' page will be presented with a button to create a page with the given title.
 
 
 ## Covered in this tutorial
@@ -28,15 +28,11 @@ type Page struct {
 
 1. Viewing pages
 
-Visiting the `/view/<page title>` URL will show the page content if the page already exists.
+To show the content of a Title visit `/view/<page title>` URL.
 
-3. Editing pages
+2. Editing pages
 
-TODO
-
-5. Saving pages
-
-TODO
+To edit a Title visit the `/edit/<page title>` URL or use the 'edit' link on a page viewed.
 
 
 ### Building and running the application
