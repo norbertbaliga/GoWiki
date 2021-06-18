@@ -3,7 +3,7 @@ Go implementation of a simple Wiki.
 
 This code is based on one of the official Golang Tutorials here: https://golang.org/doc/articles/wiki/
 
-## Covered in this tutorial
+## Covered in this tutorial :) For fun to make conflict
 
 - Creating a data structure with load and save methods
 - Using the net/http package to build web applications
