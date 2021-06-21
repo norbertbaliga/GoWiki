@@ -41,3 +41,6 @@ To edit a Title visit the `/edit/<page title>` URL or use the 'edit' link on a p
 $ go build wiki.go
 $ ./wiki
 ```
+
+
+NEw thing.
