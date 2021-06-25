@@ -22,6 +22,7 @@ type Page struct {
 
 var templates = template.Must(template.ParseFiles("templates/header.html", "templates/index.html", "templates/edit.html", "templates/view.html", "templates/error.html"))
 var validPath = regexp.MustCompile("^/(delete|edit|save|view)/([a-zA-Z0-9_-]+)$")
+var validStaticPath = regexp.MustCompile("^/(js|css)/([a-zA-Z0-9_./-]+)$")
 
 func (p *Page) save() error {
 	filename := "pages/" + p.Title + ".txt"
@@ -93,48 +94,54 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 	}
 }
 
-func getFileInfosFromDir(dirpath string) ([]os.FileInfo, error) {
-	f, err := os.Open(dirpath)
+func getFileNamesFromPath(files []string) {
+	for index, file := range files {
+		base := filepath.Base(file)
+		ext := filepath.Ext(base)
+		files[index] = strings.TrimSuffix(base, ext)
+	}
+}
+
+func searchFilesInDirpath(dirpath, searchTerm string) ([]string, error) {
+	pattern := dirpath + "*" + searchTerm + "*.txt"
+	//log.Println("Search pattern: " + pattern)
+	files, err := filepath.Glob(pattern)
 	if err != nil {
-		log.Fatal(err)
 		return nil, err
 	}
 
-	files, err := f.Readdir(-1)
-	f.Close()
-	if err != nil {
-		log.Fatal(err)
-		return nil, err
-	}
-	sort.Slice(files, func(i, j int) bool { return files[i].Name() < files[j].Name() })
+	getFileNamesFromPath(files)
+	//log.Println(files)
+	sort.Slice(files, func(i, j int) bool { return files[i] < files[j] })
 
 	return files, nil
 }
 
-func getNamesOfFileInfos(files []os.FileInfo) []string {
-	var names []string
-	for _, file := range files {
-		ext := filepath.Ext(file.Name())
-		if ext == ".txt" {
-			names = append(names, strings.TrimSuffix(file.Name(), ext))
-		}
-	}
-	return names
-}
-
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	fileInfos, err := getFileInfosFromDir("./pages")
+	searchTerm := r.URL.Query().Get("q")
+	pages, err := searchFilesInDirpath("./pages/", searchTerm)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	pages := getNamesOfFileInfos(fileInfos)
 	renderTemplate(w, "index", pages)
+}
+
+func staticHandler(w http.ResponseWriter, r *http.Request) {
+	// log.Println("Serve static content: " + r.URL.Path)
+	m := validStaticPath.FindStringSubmatch(r.URL.Path)
+	if m == nil {
+		http.NotFound(w, r)
+		return
+	}
+	http.ServeFile(w, r, r.URL.Path[1:])
 }
 
 func main() {
 	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/js/", staticHandler)
+	http.HandleFunc("/css/", staticHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))

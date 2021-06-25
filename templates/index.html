@@ -1,26 +1,37 @@
-<h1>Welcome to GoWiki</h1>
+<html>
+<head>
+    <title>GoWiki</title>
+    <script src="js/index.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body onload="fillSearchInput();">
+    <h1>Welcome to GoWiki</h1>
+    
+    <hr />
+    
+    <div id="searchForm">
+        <form action="/">
+            <label>Search:</label>
+            <input type="search" name="q" id="search" placeholder="Search pages" value="" />
+            <input type="submit" value="Go" />
+        </form>
+    </div>
+    
+    <hr />
 
-<h2>Available Wiki pages</h2>
-<hr />
-<div>
-    <input type="text" id="title" value="" placeholder="Page title" />
-    <button onclick="createPage()">Create new page</button>    
-</div>
-<div>
-    <ul>
-    {{range $file := .}}
-        <li><a href="/view/{{$file}}">{{$file}}</a> (<a href="/delete/{{$file}}">delete</a>)</li>
-    {{end}}
-    </ul>
-</div>
+    <div>
+        <input type="text" id="title" value="" placeholder="Page title" />
+        <button onclick="createPage();">Create new page</button>    
+    </div>
 
-<script>
-    function createPage() {
-        var title = document.getElementById('title');
-        if(title == null || title.value == "") {
-            alert("Please give a page title!");
-            return false;
-        }
-        location.href = '/edit/' + title.value;
-    }
-</script>
+    <h2>Available Wiki pages</h2>
+
+    <div>
+        <ul>
+        {{range $file := .}}
+            <li><a href="/view/{{$file}}">{{$file}}</a> (<a href="/delete/{{$file}}">delete</a>)</li>
+        {{end}}
+        </ul>
+    </div>
+</body>
+</html>
