@@ -8,6 +8,7 @@ Added features:
 - Index page at "/" path to show list of available pages.
 - Create a new page from the Index page.
 - Delete function. It is possible to delete pages from the index page and the view page.
+- Search function. Filter Wiki pages based on the searchterm provided.
 
 Running the application will launch a webserver listening on the port 8080. 
 
@@ -36,27 +37,32 @@ type Page struct {
 
 ### Application functions
 
-1. Listing pages
+1. List pages
 
 At the root path '/' the Index page shows the available Wiki pages (lists the .txt files under the pages folder).
 
-2. Creating pages
+2. Create pages
 
 By visiting the `/view/<page title>` or `/edit/<page title>` URL with a page title that does not exist a new page can be created. In addition to that it is possible to provide a title on the Index page and clicking on the 'Create new page' button.
 
 At the root path '/' the Index page shows the available Wiki pages (lists the `.txt` files under the `/pages` folder).
 
-3. Viewing pages
+3. View pages
 
 To show the content of a page visit `/view/<page title>` URL. However, on the Index page the titles are links that brings the user to this view. 
 
-4. Editing pages
+4. Edit pages
 
 To edit a Title visit the `/edit/<page title>` URL or use the 'edit' link on a page viewed.
 
 5. Delete pages
 
 Delete links are available on the Index page next to the titles and on the view page. This removes the given `.txt` file under the `/pages` folder
+
+6. Search pages
+
+It is possible to filter the listed Wiki pages on the Index site by providing a searchterm in the `Search pages` field or adding `?q=<searchterm>` GET parameter to the URL directly.
+
 
 ### Building and running the application
 
