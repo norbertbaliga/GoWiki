@@ -5,7 +5,8 @@ This code is based on one of the official Golang Tutorials here: https://golang.
 
 Added features:
 
-- Index page at "/" path to show list of available pages.
+- Index page at `/` path to show list of available pages.
+- Serve static content under `/js` and `/css`.
 - Create a new page from the Index page.
 - Delete function. It is possible to delete pages from the index page and the view page.
 - Search function. Filter Wiki pages based on the searchterm provided.
