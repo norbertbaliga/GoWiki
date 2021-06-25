@@ -1,0 +1,26 @@
+<h1>Welcome to GoWiki</h1>
+
+<h2>Available Wiki pages</h2>
+<hr />
+<div>
+    <input type="text" id="title" value="" placeholder="Page title" />
+    <button onclick="createPage()">Create new page</button>    
+</div>
+<div>
+    <ul>
+    {{range $file := .}}
+        <li><a href="/view/{{$file}}">{{$file}}</a> (<a href="/delete/{{$file}}">delete</a>)</li>
+    {{end}}
+    </ul>
+</div>
+
+<script>
+    function createPage() {
+        var title = document.getElementById('title');
+        if(title == null || title.value == "") {
+            alert("Please give a page title!");
+            return false;
+        }
+        location.href = '/edit/' + title.value;
+    }
+</script>
