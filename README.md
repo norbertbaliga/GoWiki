@@ -71,3 +71,11 @@ It is possible to filter the listed Wiki pages on the Index site by providing a 
 $ go build wiki.go
 $ ./wiki
 ```
+
+
+### Building Docker image and running the application in container
+
+```
+$ docker build -t <gowiki:1.0> .
+$ docker run -it --rm -p 8080:8080 <gowiki:1.0>
+```
