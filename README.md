@@ -79,3 +79,5 @@ $ ./wiki
 $ docker build -t <gowiki:1.0> .
 $ docker run -it --rm -p 8080:8080 <gowiki:1.0>
 ```
+
+Choose an appropriate tag `<gowiki:1.0>` for the image based on the application version.
