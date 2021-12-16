@@ -1,4 +1,4 @@
-FROM golang:1.16.5-buster
+FROM golang:1.16.11-buster
  
 RUN mkdir -p /app
  
