@@ -3,3 +3,6 @@ pages/*
 
 # Ignore binary file built from the source
 wiki
+
+# Ignore deepcode cacche file
+.dccache
