@@ -1,4 +1,4 @@
-FROM golang:1.16.12-bullseye
+FROM golang:bullseye
  
 RUN mkdir -p /app
  
