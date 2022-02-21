@@ -79,3 +79,16 @@ $ ./wiki
 $ docker build -t <gowiki:1.0> .
 $ docker run -it --rm -p 8080:8080 <gowiki:1.0>
 ```
+
+Choose an appropriate tag `<gowiki:1.0>` for the image based on the application version.
+
+
+### TODO: Azure DevOps
+
+The next step would be moving this project into Azure DevOps and set up automatic build-test-deploy (CD pipeline)
+
+- [ ] Import GitHub repository into Azure DevOps Repos 
+
+- [ ] Configure Git to push changes to both GitHub and Azure DevOps Repo (remotes)
+
+(Work in progress..)
