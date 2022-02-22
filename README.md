@@ -11,11 +11,11 @@ Added features:
 - Delete function. It is possible to delete pages from the index page and the view page.
 - Search function. Filter Wiki pages based on the searchterm provided.
 
-Running the application will launch a webserver listening on the port 8080. 
+Running the application will launch a webserver listening on the port 8888. 
 
-Open the `http://localhost:8080/` in a browser or any HTTP client to access the Index page of our GoWiki site. Here there is a list of available pages that can be viewed and it is possible to create a new page. Navigation between the Index page and View/Edit are possible via links placed on the sites. Full CRUD functionalites have been implemented.
+Open the `http://localhost:8888/` in a browser or any HTTP client to access the Index page of our GoWiki site. Here there is a list of available pages that can be viewed and it is possible to create a new page. Navigation between the Index page and View/Edit are possible via links placed on the sites. Full CRUD functionalites have been implemented.
 
-Directly visiting the `http://localhost:8080/view/<page title>` URL it is possible to view the content of the `<page title>.txt` text file under the `/pages` folder. If the title does not exist a `Page Not Found` page will be presented with a button to create a page with the given title. Similar to the View directly visiting the `http://localhost:8080/edit/<page title>` URL it is possible to edit the content of the title if exists, otherwise new page can be created.
+Directly visiting the `http://localhost:8888/view/<page title>` URL it is possible to view the content of the `<page title>.txt` text file under the `/pages` folder. If the title does not exist a `Page Not Found` page will be presented with a button to create a page with the given title. Similar to the View directly visiting the `http://localhost:8888/edit/<page title>` URL it is possible to edit the content of the title if exists, otherwise new page can be created.
 
 
 ## Covered in this tutorial
@@ -77,7 +77,7 @@ $ ./wiki
 
 ```
 $ docker build -t <gowiki:1.0> .
-$ docker run -it --rm -p 8080:8080 <gowiki:1.0>
+$ docker run -it --rm -p 8888:8888 <gowiki:1.0>
 ```
 
 Choose an appropriate tag `<gowiki:1.0>` for the image based on the application version.
@@ -87,8 +87,8 @@ Choose an appropriate tag `<gowiki:1.0>` for the image based on the application 
 
 The next step would be moving this project into Azure DevOps and set up automatic build-test-deploy (CD pipeline)
 
-- [ ] Import GitHub repository into Azure DevOps Repos 
+- [x] Import GitHub repository into Azure DevOps Repos 
 
-- [ ] Configure Git to push changes to both GitHub and Azure DevOps Repo (remotes)
+- [x] Configure Git to push changes to both GitHub and Azure DevOps Repo (remotes)
 
 (Work in progress..)
