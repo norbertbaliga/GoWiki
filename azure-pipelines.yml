@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '1.3'
+  tag: 'latest'
 
 stages:
 - stage: Build_Publish
