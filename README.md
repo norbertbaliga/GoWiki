@@ -85,10 +85,18 @@ Choose an appropriate tag `<gowiki:1.0>` for the image based on the application 
 
 ### TODO: Azure DevOps
 
-The next step would be moving this project into Azure DevOps and set up automatic build-test-deploy (CD pipeline)
+The next step would be moving this project into Azure DevOps and set up automatic build-test-deploy (CI/CD pipeline)
 
 - [x] Import GitHub repository into Azure DevOps Repos 
 
 - [x] Configure Git to push changes to both GitHub and Azure DevOps Repo (remotes)
+
+- [x] Create and configure Azure Pipelines to build docker image and publish it to DockerHub (azure-pipelines.yaml)
+
+- [x] Create an Azure App Services application for running our docker image
+
+- [x] Create Release pipeline to deploy the image to the web app created above
+
+- [x] Add authentication to the web app to restrict access to it (Azure AAD own tenant)
 
 (Work in progress..)
