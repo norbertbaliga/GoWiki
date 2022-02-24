@@ -1,5 +1,5 @@
 # Ignore all Wiki pages created
-pages/*
+pages/*.txt
 
 # Ignore binary file built from the source
 wiki
