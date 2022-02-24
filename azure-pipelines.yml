@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 'gowiki:1.2'
+  tag: '1.3'
 
 stages:
 - stage: Build_Publish
