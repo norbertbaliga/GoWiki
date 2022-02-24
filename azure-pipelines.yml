@@ -12,8 +12,8 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: Build and publish
+  displayName: Build image and publish
   jobs:
   - job: Build
     displayName: Build
@@ -27,3 +27,9 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
+    - task: PublishBuildArtifacts@1
+      displayName: Publish image
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'gowiki'
+        publishLocation: 'Container'
