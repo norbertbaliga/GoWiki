@@ -17,7 +17,9 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: CopyFiles@2
   inputs:
+    Contents: 'wiki'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    CleanTargetFolder: true
 - task: PublishBuildArtifacts@1
   inputs:
      artifactName: drop
