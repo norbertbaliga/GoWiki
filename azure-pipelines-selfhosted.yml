@@ -13,6 +13,7 @@ steps:
 - task: Go@0
   inputs:
     command: 'build'
+    arguments: 'wiki.go'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: CopyFiles@2
   inputs:
