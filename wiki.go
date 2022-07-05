@@ -26,12 +26,16 @@ var validPath = regexp.MustCompile("^/(delete|edit|save|view)/([a-zA-Z0-9_-]+)$"
 var validStaticPath = regexp.MustCompile("^/(js|css)/([a-zA-Z0-9_./-]+)$")
 
 func (p *Page) save() error {
-	filename := "pages/" + p.Title + ".txt"
+	// filename := "pages/" + p.Title + ".txt"
+	// Clean the path to avoid Path Traversal attacks - #1
+	filename := filepath.Join("pages", p.Title+".txt")
 	return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := "pages/" + title + ".txt"
+	// filename := "pages/" + title + ".txt"
+	// Clean the path to avoid Path Traversal attacks - #1
+	filename := filepath.Join("pages", title+".txt")
 	body, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
