@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package main
@@ -138,15 +139,33 @@ func staticHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, r.URL.Path[1:])
 }
 
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	host, err := os.Hostname()
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Fprintln(w, fmt.Sprintf("<html><head><title>Info</title></head><body><h2>Server is up.</h2><h3>Served from %v</h3></body></head></html>", host))
+}
+
 func main() {
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/js/", staticHandler)
 	http.HandleFunc("/css/", staticHandler)
+	http.HandleFunc("/info", infoHandler)
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
 	http.HandleFunc("/delete/", makeHandler(deleteHandler))
 
-	fmt.Println("Start webserver at *:8888")
-	log.Fatal(http.ListenAndServe(":8888", nil))
+	port := os.Getenv("GOWIKI_LISTEN_PORT")
+
+	if port == "" {
+		port = "8888"
+	}
+
+	fmt.Println("Start webserver at *:" + port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
