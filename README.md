@@ -93,10 +93,14 @@ The next step would be moving this project into Azure DevOps and set up automati
 
 - [x] Create and configure Azure Pipelines to build docker image and publish it to DockerHub (azure-pipelines.yaml)
 
-- [x] Create an Azure App Services application for running our docker image
+- [x] <strike>Create an Azure App Services application for running our docker image</strike>
 
-- [x] Create Release pipeline to deploy the image to the web app created above
+- [x] <strike>Create Release pipeline to deploy the image to the web app created above</strike>
 
-- [x] Add authentication to the web app to restrict access to it (Azure AAD own tenant)
+- [x] <strike>Add authentication to the web app to restrict access to it (Azure AAD own tenant)</strike>
+
+- [] Create an AKS Kubernetes cluster for running the docker image
+
+- [] Create Release pipeline to deploy the manifests to AKS cluster
 
 (Work in progress..)
