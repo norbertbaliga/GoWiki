@@ -99,8 +99,8 @@ The next step would be moving this project into Azure DevOps and set up automati
 
 - [x] <strike>Add authentication to the web app to restrict access to it (Azure AAD own tenant)</strike>
 
-- [] Create an AKS Kubernetes cluster for running the docker image
+- Create an AKS Kubernetes cluster for running the docker image
 
-- [] Create Release pipeline to deploy the manifests to AKS cluster
+- Create Release pipeline to deploy the manifests to AKS cluster
 
 (Work in progress..)
