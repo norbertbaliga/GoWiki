@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '1.2.$(Build.BuildID)'
+  version: '1.2.$(Build.BuildID)'
 
 stages:
 - stage: Build_Publish
@@ -27,4 +27,6 @@ stages:
         repository: 'forchaladtest/mygowiki'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: '$(tag)'
+        tags: |
+          latest
+          $(version)
