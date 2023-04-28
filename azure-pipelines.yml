@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 'latest'
+  tag: '1.2.$(Build.BuildID)'
 
 stages:
 - stage: Build_Publish
