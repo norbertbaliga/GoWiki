@@ -1,8 +1,21 @@
-{{template "header" .}}
+<html>
+<head>
+    <title>GoWiki</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
 
-<h1>Editing {{.Title}}</h1>
+<body>
+    <h1>Welcome to GoWiki</h1>
+    
+    <hr />
 
-<form action="/save/{{.Title}}" method="POST">
-    <div><textarea name="body" rows="20" cols="80">{{printf "%s" .Body}}</textarea></div>
-    <div><input type="submit" value="Save"></div>
-</form>
+    {{template "header" .}}
+
+    <h1>Editing {{.Title}}</h1>
+
+    <form action="/save/{{.Title}}" method="POST">
+        <div><textarea name="body" rows="20" cols="80">{{printf "%s" .Body}}</textarea></div>
+        <div><input type="submit" value="Save"></div>
+    </form>
+</body>
+</html>
