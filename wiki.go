@@ -21,7 +21,7 @@ type Page struct {
 	Body  []byte
 }
 
-var templates = template.Must(template.ParseFiles("templates/header.html", "templates/index.html", "templates/edit.html", "templates/view.html", "templates/error.html"))
+var templates = template.Must(template.ParseFiles("templates/header.html", "templates/index.html", "templates/edit.html", "templates/view.html", "templates/error.html", "templates/info.html"))
 var validPath = regexp.MustCompile("^/(delete|edit|save|view)/([a-zA-Z0-9_-]+)$")
 var validStaticPath = regexp.MustCompile("^/(js|css)/([a-zA-Z0-9_./-]+)$")
 
@@ -151,7 +151,7 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintln(w, fmt.Sprintf("<html><head><title>Info</title></head><body><h2>Server is up.</h2><h3>Served from %v</h3></body></head></html>", host))
+	renderTemplate(w, "info", host)
 }
 
 func main() {
