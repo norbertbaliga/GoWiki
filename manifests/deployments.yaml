@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 8888
         volumeMounts:
-        - mountPath: /app/pages
+        - mountPath: /home/pages
           name: azfile-volume
       volumes:
       - name: azfile-volume
