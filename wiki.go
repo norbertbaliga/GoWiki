@@ -6,7 +6,6 @@ package main
 import (
 	"fmt"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -28,15 +27,15 @@ var validStaticPath = regexp.MustCompile("^/(js|css)/([a-zA-Z0-9_./-]+)$")
 func (p *Page) save() error {
 	// filename := "pages/" + p.Title + ".txt"
 	// Clean the path to avoid Path Traversal attacks - #1
-	filename := filepath.Join("pages", p.Title+".txt")
-	return ioutil.WriteFile(filename, p.Body, 0600)
+	filename := filepath.Join("/home/pages", p.Title+".txt")
+	return os.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
 	// filename := "pages/" + title + ".txt"
 	// Clean the path to avoid Path Traversal attacks - #1
-	filename := filepath.Join("pages", title+".txt")
-	body, err := ioutil.ReadFile(filename)
+	filename := filepath.Join("/home/pages", title+".txt")
+	body, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func deleteHandler(w http.ResponseWriter, r *http.Request, title string) {
-	err := os.Remove("./pages/" + title + ".txt")
+	err := os.Remove("/home/pages/" + title + ".txt")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -124,7 +123,7 @@ func searchFilesInDirpath(dirpath, searchTerm string) ([]string, error) {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	searchTerm := r.URL.Query().Get("q")
-	pages, err := searchFilesInDirpath("./pages/", searchTerm)
+	pages, err := searchFilesInDirpath("/home/pages/", searchTerm)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

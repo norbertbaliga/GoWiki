@@ -14,16 +14,16 @@ spec:
       labels:
         app: gowiki
     spec:
-      volumes: 
-      - name: azfile-volume
-        persistentVolumeClaim:
-          claimName: gowiki-azfile-pvc
       containers:
       - name: gowiki
         image: forchaladtest/mygowiki:latest
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8888
         volumeMounts:
         - mountPath: /app/pages
           name: azfile-volume
+      volumes:
+      - name: azfile-volume
+        persistentVolumeClaim:
+          claimName: gowiki-azfile-pvc

@@ -9,5 +9,5 @@ COPY --from=builder /app/wiki .
 COPY --from=builder /app/css ./css
 COPY --from=builder /app/js ./js
 COPY --from=builder /app/templates ./templates
-COPY --from=builder /app/pages ./pages
+COPY --from=builder /app/pages /home/pages
 ENTRYPOINT ["/app/wiki"]
