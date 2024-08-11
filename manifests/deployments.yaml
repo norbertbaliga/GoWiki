@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gowiki-deployment
+  labels:
+    app: gowiki
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gowiki
+  template:
+    metadata:
+      labels:
+        app: gowiki
+    spec:
+      containers:
+      - name: gowiki
+        image: forchaladtest/mygowiki:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+        - mountPath: /home/pages
+          name: azfile-volume
+      volumes:
+      - name: azfile-volume
+        persistentVolumeClaim:
+          claimName: gowiki-azfile-pvc
