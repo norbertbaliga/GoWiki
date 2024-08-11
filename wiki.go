@@ -23,18 +23,19 @@ type Page struct {
 var templates = template.Must(template.ParseFiles("templates/header.html", "templates/index.html", "templates/edit.html", "templates/view.html", "templates/error.html", "templates/info.html"))
 var validPath = regexp.MustCompile("^/(delete|edit|save|view)/([a-zA-Z0-9_-]+)$")
 var validStaticPath = regexp.MustCompile("^/(js|css)/([a-zA-Z0-9_./-]+)$")
+var pages_path string
 
 func (p *Page) save() error {
 	// filename := "pages/" + p.Title + ".txt"
 	// Clean the path to avoid Path Traversal attacks - #1
-	filename := filepath.Join("/home/pages", p.Title+".txt")
+	filename := filepath.Join(pages_path, p.Title+".txt")
 	return os.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
 	// filename := "pages/" + title + ".txt"
 	// Clean the path to avoid Path Traversal attacks - #1
-	filename := filepath.Join("/home/pages", title+".txt")
+	filename := filepath.Join(pages_path, title+".txt")
 	body, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -79,7 +80,9 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func deleteHandler(w http.ResponseWriter, r *http.Request, title string) {
-	err := os.Remove("/home/pages/" + title + ".txt")
+	// Clean the path to avoid Path Traversal attacks - #1
+	filename := filepath.Join(pages_path, title+".txt")
+	err := os.Remove(filename)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -107,7 +110,7 @@ func getFileNamesFromPath(files []string) {
 }
 
 func searchFilesInDirpath(dirpath, searchTerm string) ([]string, error) {
-	pattern := dirpath + "*" + searchTerm + "*.txt"
+	pattern := dirpath + "/*" + searchTerm + "*.txt"
 	//log.Println("Search pattern: " + pattern)
 	files, err := filepath.Glob(pattern)
 	if err != nil {
@@ -123,7 +126,7 @@ func searchFilesInDirpath(dirpath, searchTerm string) ([]string, error) {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	searchTerm := r.URL.Query().Get("q")
-	pages, err := searchFilesInDirpath("/home/pages/", searchTerm)
+	pages, err := searchFilesInDirpath(pages_path, searchTerm)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -154,6 +157,12 @@ func infoHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	pages_path = os.Getenv("GOWIKI_PAGES_PATH")
+
+	if pages_path == "" {
+		pages_path = "./pages"
+	}
+
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("/js/", staticHandler)
 	http.HandleFunc("/css/", staticHandler)
@@ -169,6 +178,6 @@ func main() {
 		port = "8888"
 	}
 
-	fmt.Println("Start webserver at *:" + port)
+	fmt.Println("Start webserver at *:" + port + ", and pages are stored at " + pages_path)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
