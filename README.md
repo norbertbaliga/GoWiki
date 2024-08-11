@@ -11,11 +11,11 @@ Added features:
 - Delete function. It is possible to delete pages from the index page and the view page.
 - Search function. Filter Wiki pages based on the searchterm provided.
 
-Running the application will launch a webserver listening on the port 8888. 
+Running the application will launch a webserver listening on the port 8888 by default. The default port can be changed by setting a `GOWIKI_LISTEN_PORT` environment variable. 
 
-Open the `http://localhost:8888/` in a browser or any HTTP client to access the Index page of our GoWiki site. Here there is a list of available pages that can be viewed and it is possible to create a new page. Navigation between the Index page and View/Edit are possible via links placed on the sites. Full CRUD functionalites have been implemented.
+After running the application open the `http://localhost:8888/` URL in a browser or any HTTP client to access the Index page of GoWiki site. Here there is a list of available pages that can be viewed and it is possible to create a new page. Navigation between the Index page and View/Edit are possible via links placed on the sites. Full CRUD functionalites have been implemented.
 
-Directly visiting the `http://localhost:8888/view/<page title>` URL it is possible to view the content of the `<page title>.txt` text file under the `/pages` folder. If the title does not exist a `Page Not Found` page will be presented with a button to create a page with the given title. Similar to the View directly visiting the `http://localhost:8888/edit/<page title>` URL it is possible to edit the content of the title if exists, otherwise new page can be created.
+Directly visiting the `http://localhost:8888/view/<page title>` URL it is possible to view the content of the `<page title>.txt` text file under the `/home/pages` folder. If the title does not exist a `Page Not Found` page will be presented with a button to create a page with the given title. Similar to the View directly visiting the `http://localhost:8888/edit/<page title>` URL it is possible to edit the content of the title if exists, otherwise new page can be created.
 
 
 ## Covered in this tutorial
@@ -40,13 +40,13 @@ type Page struct {
 
 1. List pages
 
-At the root path '/' the Index page shows the available Wiki pages (lists the .txt files under the pages folder).
+At the root path '/' the Index page shows the available Wiki pages (lists the .txt files under the `/home/pages` folder).
 
 2. Create pages
 
 By visiting the `/view/<page title>` or `/edit/<page title>` URL with a page title that does not exist a new page can be created. In addition to that it is possible to provide a title on the Index page and clicking on the 'Create new page' button.
 
-At the root path '/' the Index page shows the available Wiki pages (lists the `.txt` files under the `/pages` folder).
+At the root path '/' the Index page shows the available Wiki pages (lists the `.txt` files under the `/home/pages` folder).
 
 3. View pages
 
@@ -58,7 +58,7 @@ To edit a Title visit the `/edit/<page title>` URL or use the 'edit' link on a p
 
 5. Delete pages
 
-Delete links are available on the Index page next to the titles and on the view page. This removes the given `.txt` file under the `/pages` folder
+Delete links are available on the Index page next to the titles and on the view page. This removes the given `.txt` file under the `/home/pages` folder
 
 6. Search pages
 
@@ -76,27 +76,8 @@ $ ./wiki
 ### Building Docker image and running the application in container
 
 ```
-$ docker build -t <gowiki:1.0> .
-$ docker run -it --rm -p 8888:8888 <gowiki:1.0>
+$ docker build -t <gowiki:tag> .
+$ docker run -it --rm -p 8888:8888 <gowiki:tag>
 ```
 
-Choose an appropriate tag `<gowiki:1.0>` for the image based on the application version.
-
-
-### TODO: Azure DevOps
-
-The next step would be moving this project into Azure DevOps and set up automatic build-test-deploy (CI/CD pipeline)
-
-- [x] Import GitHub repository into Azure DevOps Repos 
-
-- [x] Configure Git to push changes to both GitHub and Azure DevOps Repo (remotes)
-
-- [x] Create and configure Azure Pipelines to build docker image and publish it to DockerHub (azure-pipelines.yaml)
-
-- [x] Create an Azure App Services application for running our docker image
-
-- [x] Create Release pipeline to deploy the image to the web app created above
-
-- [x] Add authentication to the web app to restrict access to it (Azure AAD own tenant)
-
-(Work in progress..)
+Choose an appropriate tag `<gowiki:tag>` for the image based on the application version.

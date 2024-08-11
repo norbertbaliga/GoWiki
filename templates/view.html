@@ -1,7 +1,9 @@
 {{template "header" .}}
 
-<h1>{{.Title}}</h1>
+    <h2>{{.Title}}</h2>
 
-<p>[<a href="/edit/{{.Title}}">Edit</a>]&nbsp;[<a href="/delete/{{.Title}}">Delete</a>]</p>
+    <p>[<a href="/edit/{{.Title}}">Edit</a>]&nbsp;[<a href="/delete/{{.Title}}">Delete</a>]</p>
 
-<div><pre>{{printf "%s" .Body}}</pre></div>
+    <div><pre>{{printf "%s" .Body}}</pre></div>
+</body>
+</html>

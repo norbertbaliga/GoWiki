@@ -1,5 +1,5 @@
 # Docker
-# Build a Docker image
+# Build a Docker image and push it to DockerHub
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: 'latest'
+  version: '1.2.$(Build.BuildID)'
 
 stages:
 - stage: Build_Publish
@@ -21,10 +21,12 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and Push image
       inputs:
         containerRegistry: 'DockerHub'
         repository: 'forchaladtest/mygowiki'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: '$(tag)'
+        tags: |
+          latest
+          $(version)
